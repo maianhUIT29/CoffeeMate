@@ -9,18 +9,23 @@ import com.coffeemate.model.Employee;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
+import java.util.stream.Collectors;
 /**
  *
  * @author meiln
  */
-public class EmployeeView extends javax.swing.JFrame {
+public class EmployeeView extends javax.swing.JFrame 
+{
  private EmployeeController employeeController;  // Khai báo controller
     /**
      * Creates new form EmployeeView
      */
     public EmployeeView() {
         initComponents();
-        employeeController = new EmployeeController();  // Khởi tạo controller
+         employeeController = new EmployeeController();
+    if (employeeController != null) {
+        loadEmployeeData();
+    }
     }
 
     /**
@@ -37,7 +42,7 @@ public class EmployeeView extends javax.swing.JFrame {
         btnCreate = new javax.swing.JToggleButton();
         btnDelete = new javax.swing.JToggleButton();
         btnUpdate = new javax.swing.JToggleButton();
-        btnRead = new javax.swing.JToggleButton();
+        btnSearch = new javax.swing.JToggleButton();
         spCRUDTable = new javax.swing.JScrollPane();
         tbEmployee = new javax.swing.JTable();
 
@@ -82,15 +87,15 @@ public class EmployeeView extends javax.swing.JFrame {
             }
         });
 
-        btngroupCRUD.add(btnRead);
-        btnRead.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnRead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/coffeemate/resources/ic_search.png"))); // NOI18N
-        btnRead.setText("Tìm kiếm");
-        btnRead.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnRead.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnRead.addActionListener(new java.awt.event.ActionListener() {
+        btngroupCRUD.add(btnSearch);
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/coffeemate/resources/ic_search.png"))); // NOI18N
+        btnSearch.setText("Tìm kiếm");
+        btnSearch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnSearch.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReadActionPerformed(evt);
+                btnSearchActionPerformed(evt);
             }
         });
 
@@ -122,7 +127,7 @@ public class EmployeeView extends javax.swing.JFrame {
                         .addGap(48, 48, 48)
                         .addComponent(btnUpdate)
                         .addGap(53, 53, 53)
-                        .addComponent(btnRead))
+                        .addComponent(btnSearch))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(240, 240, 240)
                         .addComponent(lblTableTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -137,7 +142,7 @@ public class EmployeeView extends javax.swing.JFrame {
                     .addComponent(btnCreate)
                     .addComponent(btnDelete)
                     .addComponent(btnUpdate)
-                    .addComponent(btnRead))
+                    .addComponent(btnSearch))
                 .addGap(18, 18, 18)
                 .addComponent(spCRUDTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -146,67 +151,111 @@ public class EmployeeView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadActionPerformed
-        loadEmployeeData();
-    }//GEN-LAST:event_btnReadActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+     String keyword = JOptionPane.showInputDialog(this, "Nhập tên NV cần tìm kiếm:");
+    if (keyword != null && !keyword.trim().isEmpty()) {
+        String lowerKeyword = keyword.trim().toLowerCase();
+
+        List<Employee> employees = employeeController.getAllEmployees().stream()
+                .filter(e -> {
+                    if (e.getFullName() != null) {
+                        for (String part : e.getFullName().toLowerCase().split("\\s+")) {
+                            if (part.equals(lowerKeyword)) {   // chỉ so sánh từng từ trong họ tên
+                                return true;
+                            }
+                        }
+                    }
+                    return false; // Không còn kiểm tra role, phone, email nữa
+                })
+                .collect(Collectors.toList());
+
+        DefaultTableModel model = (DefaultTableModel) tbEmployee.getModel();
+        model.setRowCount(0);
+        for (Employee emp : employees) {
+            model.addRow(new Object[]{
+                emp.getEmployeeID(), 
+                emp.getFullName(), 
+                emp.getRole(), 
+                emp.getPhone(), 
+                emp.getEmail(), 
+                emp.getHireDate()
+            });
+        }
+    } else {
+        loadEmployeeData();  
+    }    }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-      int row = tbEmployee.getSelectedRow();
+        int row = tbEmployee.getSelectedRow();
         if (row != -1) {
-            int employeeId = (int) tbEmployee.getValueAt(row, 0);
-            boolean success = employeeController.deleteEmployee(employeeId);
-            if (success) {
-                JOptionPane.showMessageDialog(this, "Nhân viên đã được xóa!");
-                loadEmployeeData(); // Cập nhật dữ liệu sau khi xóa
+            int id = (int) tbEmployee.getValueAt(row, 0);
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa nhân viên này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION && employeeController.deleteEmployee(id)) {
+                JOptionPane.showMessageDialog(this, "Xóa nhân viên thành công!");
+                loadEmployeeData();
             } else {
-                JOptionPane.showMessageDialog(this, "Xóa nhân viên thất bại!");
+                JOptionPane.showMessageDialog(this, "Xóa nhân viên thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên cần xóa!");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên để xóa!");
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        // Tạo và hiển thị form nhập dữ liệu nhân viên mới
-        Employee employee = new Employee();
-        employee.setFullName("Nguyễn Văn A");  // Chỉ là ví dụ, bạn có thể lấy từ form
-        employee.setRole("Manager");
-        employee.setPhone("0901234567");
-        employee.setEmail("nva@gmail.com");
-        employee.setHireDate(new java.util.Date());
-        
-        // Gọi controller để thêm nhân viên
-        boolean success = employeeController.addEmployee(employee);
-        if (success) {
-            JOptionPane.showMessageDialog(this, "Nhân viên đã được thêm thành công!");
-            loadEmployeeData(); // Cập nhật dữ liệu sau khi thêm
-        } else {
-            JOptionPane.showMessageDialog(this, "Thêm nhân viên thất bại!");
-        }
+         String fullName = JOptionPane.showInputDialog(this, "Nhập họ tên nhân viên:");
+    if (fullName == null || fullName.trim().isEmpty()) return;
+
+    String role = JOptionPane.showInputDialog(this, "Nhập vai trò:");
+    if (role == null || role.trim().isEmpty()) return;
+
+    String phone = JOptionPane.showInputDialog(this, "Nhập số điện thoại:");
+    if (phone == null || phone.trim().isEmpty()) return;
+
+    String email = JOptionPane.showInputDialog(this, "Nhập email:");
+    if (email == null || email.trim().isEmpty()) return;
+
+    Employee employee = new Employee();  // constructor rỗng
+    employee.setFullName(fullName);
+    employee.setRole(role);
+    employee.setPhone(phone);
+    employee.setEmail(email);
+    employee.setHireDate(new java.util.Date());
+
+    if (employeeController.addEmployee(employee)) {
+        JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!");
+        loadEmployeeData();
+    } else {
+        JOptionPane.showMessageDialog(this, "Thêm nhân viên thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-   int row = tbEmployee.getSelectedRow();
-    if (row != -1) {
-        int employeeId = (int) tbEmployee.getValueAt(row, 0);
-        Employee employee = employeeController.getEmployeeById(employeeId);
+     int row = tbEmployee.getSelectedRow();
+        if (row != -1) {
+            int id = (int) tbEmployee.getValueAt(row, 0);
+            Employee employee = employeeController.getEmployeeById(id);
+            if (employee != null) {
+                String fullName = JOptionPane.showInputDialog(this, "Nhập họ tên mới:", employee.getFullName());
+                String role = JOptionPane.showInputDialog(this, "Nhập vai trò mới:", employee.getRole());
+                String phone = JOptionPane.showInputDialog(this, "Nhập số điện thoại mới:", employee.getPhone());
+                String email = JOptionPane.showInputDialog(this, "Nhập email mới:", employee.getEmail());
 
-        // Sau khi lấy thông tin nhân viên, bạn có thể hiển thị thông tin này lên form sửa
-        if (employee != null) {
-            employee.setPhone("0907654321"); // Ví dụ sửa số điện thoại
-            boolean success = employeeController.updateEmployee(employee);
-            if (success) {
-                JOptionPane.showMessageDialog(this, "Nhân viên đã được cập nhật!");
-                loadEmployeeData(); // Cập nhật dữ liệu sau khi sửa
-            } else {
-                JOptionPane.showMessageDialog(this, "Cập nhật nhân viên thất bại!");
+                if (fullName != null && role != null && phone != null && email != null) {
+                    employee.setFullName(fullName);
+                    employee.setRole(role);
+                    employee.setPhone(phone);
+                    employee.setEmail(email);
+                    if (employeeController.updateEmployee(employee)) {
+                        JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+                        loadEmployeeData();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên!");
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên để sửa!");
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Vui lòng chọn nhân viên cần sửa!");
-    }
 
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -264,11 +313,12 @@ public class EmployeeView extends javax.swing.JFrame {
         }
     }
 
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCreate;
     private javax.swing.JToggleButton btnDelete;
-    private javax.swing.JToggleButton btnRead;
+    private javax.swing.JToggleButton btnSearch;
     private javax.swing.JToggleButton btnUpdate;
     private javax.swing.ButtonGroup btngroupCRUD;
     private javax.swing.JLabel lblTableTitle;

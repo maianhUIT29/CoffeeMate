@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/MSI/Downloads/Coffee/src/database/DBConnection.java</file>
+            <file>file:/C:/Users/MSI/Downloads/Coffee/src/model/MenuItem.java</file>
+            <file>file:/C:/Users/MSI/Downloads/Coffee/src/dao/DAOInterface.java</file>
+            <file>file:/C:/Users/MSI/Downloads/Coffee/src/dao/MenuItemDAO.java</file>
+            <file>file:/C:/Users/MSI/Downloads/Coffee/src/test/TestMenuItemDAO.java</file>
+            <file>file:/C:/Users/MSI/Downloads/Coffee/src/gui/MenuManagementUI.java</file>
+            <file>file:/C:/Users/MSI/Downloads/Coffee/src/gui/MenuItemDialog.java</file>
+        </group>
+    </open-files>
+</project-private>

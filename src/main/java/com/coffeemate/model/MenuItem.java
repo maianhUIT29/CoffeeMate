@@ -9,52 +9,81 @@ package com.coffeemate.model;
  * @author meiln
  */
 public class MenuItem {
-  
-    private int menuItemID;
-    private String itemName;
-    private double price;
-    private String description;
-    private String status;
-
-    // Getters and Setters
-    public int getMenuItemID() {
-        return menuItemID;
+    private int MenuItemID;
+    private String ItemName;
+    private float Price;
+    private String Description;
+    private String Status = "Available";
+    
+    public MenuItem() {
+        super();
     }
-
-    public void setMenuItemID(int menuItemID) {
-        this.menuItemID = menuItemID;
+    
+    public MenuItem(int MenuItemID, String ItemName, float Price, String Description, String Status){
+        super();
+        this.MenuItemID = MenuItemID;
+        this.ItemName = ItemName;
+        this.Price = Price;
+        this.Description = Description;
+        setStatus(Status);
     }
-
-    public String getItemName() {
-        return itemName;
+    
+    // Thêm constructor mới
+    public MenuItem(String ItemName, float Price, String Description, String Status){
+        super();
+        this.ItemName = ItemName;
+        this.Price = Price;
+        this.Description = Description;
+        setStatus(Status);
     }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
+    
     public String getStatus() {
-        return status;
+        return Status;
     }
-
-    public void setStatus(String status) {
-        this.status = status;
+    
+    public void setStatus(String Status) {
+        if ("Available".equals(Status) || "Unavailable".equals(Status)) {
+            this.Status = Status;
+        } else {
+            throw new IllegalArgumentException("Status must be 'Available' or 'Unavailable'");
+        }
+        
+    }
+    
+    public int getMenuItemID() {
+        return MenuItemID;
+    }
+    
+    public void setMenuItemID(int MenuItemID){
+        this.MenuItemID = MenuItemID;
+    }
+    
+    public String getItemName() {
+        return ItemName;
+    }
+    
+    public void setItemName(String ItemName){
+        this.ItemName = ItemName;
+    }
+    
+    public float getPrice() {
+        return Price;
+    }
+    
+    public void setPrice(float Price){
+        this.Price = Price;
+    }
+    
+    public String getDescription() {
+        return Description;
+    }
+    
+    public void setDescription(String Description){
+        this.Description = Description;
+    }
+    
+    @Override
+    public String toString() {
+        return "MenuItem [MenuItemID = " + MenuItemID + ", ItemName: " + ItemName + ", Price = " + Price + ", Description: " + Description + ", Status: " + Status + "]";
     }
 }
-

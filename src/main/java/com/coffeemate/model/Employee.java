@@ -9,12 +9,13 @@ import java.util.Date;
  * @author meiln
  */
 public class Employee {
-     private int employeeID;
+    private int employeeID;
     private String fullName;
     private String role;
     private String phone;
     private String email;
     private Date hireDate;
+    private String password;
 
     // Getters and Setters
     public int getEmployeeID() {
@@ -63,5 +64,13 @@ public class Employee {
 
     public void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String passWord) {
+        this.password = passWord;
     }
 }

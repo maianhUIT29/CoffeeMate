@@ -6,6 +6,8 @@ import com.coffeemate.model.Employee;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EmployeeDAO {
 
@@ -109,4 +111,135 @@ public class EmployeeDAO {
         }
         return false;
     }
+    
+    public Employee login(String email, String password) {
+        Employee employee = new Employee();
+        String query = "SELECT * FROM Employee WHERE Email = ? AND Password = ?";
+        
+        try (Connection connection = DBConnection.getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                System.out.println("Login success");
+                employee.setEmployeeID(rs.getInt("EmployeeID"));
+                employee.setFullName(rs.getString("Fullname"));
+                employee.setRole(rs.getString("Role"));
+                employee.setPhone(rs.getString("Phone"));
+                employee.setEmail(rs.getString("Email"));
+                employee.setHireDate(rs.getDate("HireDate"));
+                employee.setPassword(rs.getString("Password"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return employee;
+    } 
+    
+    public boolean updatePassword(String email, String oldPassword, String newPassword) {
+        if (!isPasswordCorrect(email, oldPassword)) {
+            return false; // Old password is incorrect
+        }
+
+        String query = "UPDATE Employee SET Password = ? WHERE Email = ?";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, newPassword);
+            stmt.setString(2, email);
+
+            return stmt.executeUpdate() > 0; // Return true if the update was successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean forgetPassword(String email, String newPassword) {
+        String query = "UPDATE Employee SET Password = ? WHERE Email = ?";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, newPassword);
+            stmt.setString(2, email);
+
+            return stmt.executeUpdate() > 0; // Return true if the update was successful
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean isPasswordCorrect(String email, String oldPassword) {
+        String query = "SELECT 1 FROM Employee WHERE Email = ? AND Password = ?";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, email);
+            stmt.setString(2, oldPassword);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next(); // Return true if a record is found
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Get  by ID
+    public Employee etById(int Id) {
+        Employee employee = null;
+        String query = "SELECT * FROM s WHERE s_id = ?";
+
+        try (Connection connection = DBConnection.getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, Id);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                employee = new Employee();
+                employee.setEmployeeID(rs.getInt("Employee"));
+                employee.setFullName(rs.getString("FullName"));
+                employee.setRole(rs.getString("Role"));
+                employee.setPhone(rs.getString("Phone"));
+                employee.setEmail(rs.getString("Email"));
+                employee.setHireDate(rs.getDate("HireDate"));
+                employee.setPassword(rs.getString("Password")); // Ensure password is set
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return employee;
+    }
+     // Đếm số lượng 
+public int count() {
+    String sql = "SELECT COUNT(*) FROM s";
+    try (Connection connection = DBConnection.getConnection(); PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        if (rs.next()) {
+            return rs.getInt(1); // Trả về số lượng 
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return 0; // Nếu có lỗi hoặc không tìm thấy dữ liệu, trả về 0
+}
+
+    // Thống kê số lượng  theo role
+//    public List<com.coffeemate.model.ChartDataModel> getCountByRole() {
+//        List<com.salesmate.model.ChartDataModel> result = new ArrayList<>();
+//        String sql = "SELECT role, COUNT(*) AS count FROM employees GROUP BY role";
+//        try (Connection conn = com.salesmate.configs.DBConnection.getConnection();
+//             PreparedStatement ps = conn.prepareStatement(sql);
+//             ResultSet rs = ps.executeQuery()) {
+//            while (rs.next()) {
+//                result.add(new com.salesmate.model.ChartDataModel(rs.getString("role"), java.math.BigDecimal.valueOf(rs.getInt("count"))));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
 }

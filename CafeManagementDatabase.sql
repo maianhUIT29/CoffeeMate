@@ -27,7 +27,8 @@ FullName VARCHAR2(100) NOT NULL,
 Role VARCHAR2(50) NOT NULL CHECK (Role IN ('Manager', 'Bartender', 'Cashier')), 
 Phone VARCHAR2(20), 
 Email VARCHAR2(100), 
-HireDate DATE NOT NULL 
+HireDate DATE NOT NULL,
+Password VARCHAR(50) DEFAULT '123456789' NOT NULL 
 ); 
 -- Bảng Ca làm việc 
 CREATE TABLE Shift ( 

@@ -13,7 +13,7 @@ public class EmployeeDAO {
 
     // Khởi tạo kết nối cơ sở dữ liệu
     public EmployeeDAO() {
-        this.connection = DBConnection.getConnection();  // Giả sử bạn đã có lớp DBConnection
+        this.connection = DBConnection.getConnection();  
     }
 
     // Lấy danh sách tất cả nhân viên

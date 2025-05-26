@@ -11,7 +11,7 @@ CREATE SEQUENCE OrderInvoice_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE InventoryReceipt_seq START WITH 1 INCREMENT BY 1; 
 CREATE SEQUENCE MaterialReport_seq START WITH 1 INCREMENT BY 1; 
 CREATE SEQUENCE Payroll_seq START WITH 1 INCREMENT BY 1; 
-CREATE SEQUENCE ActionLog_seq START WITH 1 INCREMENT BY 1; 
+
 -- Bảng Món 
 CREATE TABLE MenuItem ( 
 MenuItemID NUMBER PRIMARY KEY, 
@@ -27,7 +27,8 @@ FullName VARCHAR2(100) NOT NULL,
 Role VARCHAR2(50) NOT NULL CHECK (Role IN ('Manager', 'Bartender', 'Cashier')), 
 Phone VARCHAR2(20), 
 Email VARCHAR2(100), 
-HireDate DATE NOT NULL 
+HireDate DATE NOT NULL,
+Password VARCHAR(50) DEFAULT '123456789' NOT NULL
 ); 
 -- Bảng Ca làm việc 
 CREATE TABLE Shift ( 
@@ -129,29 +130,29 @@ INSERT INTO Shift VALUES (Shift_seq.NEXTVAL, 1, TO_DATE('2025-04-25 08:00', 'YYY
 INSERT INTO Shift VALUES (Shift_seq.NEXTVAL, 2, TO_DATE('2025-04-25 16:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2025-04-26 00:00', 'YYYY-MM-DD HH24:MI'), 45000); 
 INSERT INTO Shift VALUES (Shift_seq.NEXTVAL, 3, TO_DATE('2025-04-25 18:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2025-04-26 02:00', 'YYYY-MM-DD HH24:MI'), 40000); 
 -- Dữ liệu cho bảng CafeOrder 
-INSERT INTO CafeOrder VALUES (CafeOrder_seq.NEXTVAL, 3, TO_DATE('2025-04-25', 'YYYY-MM-DD'), 55000, 'Confirmed'); 
-INSERT INTO CafeOrder VALUES (CafeOrder_seq.NEXTVAL, 3, TO_DATE('2025-04-25', 'YYYY-MM-DD'), 70000, 'Completed'); 
-INSERT INTO CafeOrder VALUES (CafeOrder_seq.NEXTVAL, 3, TO_DATE('2025-04-26', 'YYYY-MM-DD'), 30000, 'Pending'); 
+INSERT INTO CafeOrder VALUES (CafeOrder_seq.NEXTVAL, 3, TO_DATE('2025-04-25 07:00', 'YYYY-MM-DD HH24:MI'), 55000, 'Confirmed'); 
+INSERT INTO CafeOrder VALUES (CafeOrder_seq.NEXTVAL, 3, TO_DATE('2025-04-25 13:00', 'YYYY-MM-DD HH24:MI'), 70000, 'Completed'); 
+INSERT INTO CafeOrder VALUES (CafeOrder_seq.NEXTVAL, 3, TO_DATE('2025-04-26 16:00', 'YYYY-MM-DD HH24:MI'), 30000, 'Pending'); 
 -- Dữ liệu cho bảng OrderDetail 
 INSERT INTO OrderDetail VALUES (OrderDetail_seq.NEXTVAL, 1, 1, 1, 30000); 
 INSERT INTO OrderDetail VALUES (OrderDetail_seq.NEXTVAL, 1, 3, 1, 25000); 
 INSERT INTO OrderDetail VALUES (OrderDetail_seq.NEXTVAL, 2, 2, 2, 35000); 
 INSERT INTO OrderDetail VALUES (OrderDetail_seq.NEXTVAL, 3, 1, 1, 30000); 
 -- Dữ liệu cho bảng OrderInvoice 
-INSERT INTO OrderInvoice VALUES (OrderInvoice_seq.NEXTVAL, 1, TO_DATE('2025-04-25', 'YYYY-MM-DD'), 55000, 'Paid'); 
-INSERT INTO OrderInvoice VALUES (OrderInvoice_seq.NEXTVAL, 2, TO_DATE('2025-04-25', 'YYYY-MM-DD'), 70000, 'Paid'); 
-INSERT INTO OrderInvoice VALUES (OrderInvoice_seq.NEXTVAL, 3, TO_DATE('2025-04-26', 'YYYY-MM-DD'), 30000, 'Unpaid'); 
+INSERT INTO OrderInvoice VALUES (OrderInvoice_seq.NEXTVAL, 1, TO_DATE('2025-04-25 06:00', 'YYYY-MM-DD HH24:MI'), 55000, 'Paid'); 
+INSERT INTO OrderInvoice VALUES (OrderInvoice_seq.NEXTVAL, 2, TO_DATE('2025-04-25 13:00', 'YYYY-MM-DD HH24:MI'), 70000, 'Paid'); 
+INSERT INTO OrderInvoice VALUES (OrderInvoice_seq.NEXTVAL, 3, TO_DATE('2025-04-26 16:00', 'YYYY-MM-DD HH24:MI'), 30000, 'Unpaid'); 
 -- Dữ liệu cho bảng InventoryReceipt 
-INSERT INTO InventoryReceipt VALUES (InventoryReceipt_seq.NEXTVAL, 1, TO_DATE('2025-04-25', 'YYYY-MM-DD'), 5000000, 'Coffee beans'); 
-INSERT INTO InventoryReceipt VALUES (InventoryReceipt_seq.NEXTVAL, 1, TO_DATE('2025-04-26', 'YYYY-MM-DD'), 3000000, 'Milk and sugar'); 
+INSERT INTO InventoryReceipt VALUES (InventoryReceipt_seq.NEXTVAL, 1, TO_DATE('2025-04-25 16:00', 'YYYY-MM-DD HH24:MI'), 5000000, 'Coffee beans'); 
+INSERT INTO InventoryReceipt VALUES (InventoryReceipt_seq.NEXTVAL, 1, TO_DATE('2025-04-26 16:00', 'YYYY-MM-DD HH24:MI'), 3000000, 'Milk and sugar'); 
 -- Dữ liệu cho bảng MaterialReport 
-INSERT INTO MaterialReport VALUES (MaterialReport_seq.NEXTVAL, 1, TO_DATE('2025-04-25', 'YYYY-MM-DD'), 'Coffee Beans', 0.5, 'Used for black coffee'); 
-INSERT INTO MaterialReport VALUES (MaterialReport_seq.NEXTVAL, 1, TO_DATE('2025-04-26', 'YYYY-MM-DD'), 'Milk', 0.4, 'Used for milk tea'); 
-INSERT INTO MaterialReport VALUES (MaterialReport_seq.NEXTVAL, 1, TO_DATE('2025-04-26', 'YYYY-MM-DD'), 'Flour', 0.1, 'Used for croissant'); 
+INSERT INTO MaterialReport VALUES (MaterialReport_seq.NEXTVAL, 1, TO_DATE('2025-04-25 16:00', 'YYYY-MM-DD HH24:MI'), 'Coffee Beans', 0.5, 'Used for black coffee'); 
+INSERT INTO MaterialReport VALUES (MaterialReport_seq.NEXTVAL, 1, TO_DATE('2025-04-26 15:00', 'YYYY-MM-DD HH24:MI'), 'Milk', 0.4, 'Used for milk tea'); 
+INSERT INTO MaterialReport VALUES (MaterialReport_seq.NEXTVAL, 1, TO_DATE('2025-04-26 17:00', 'YYYY-MM-DD HH24:MI'), 'Flour', 0.1, 'Used for croissant'); 
 -- Dữ liệu cho bảng Payroll 
-INSERT INTO Payroll VALUES (Payroll_seq.NEXTVAL, 1, 1, 8, 400000, TO_DATE('2025-04-25', 'YYYY-MM-DD')); 
-INSERT INTO Payroll VALUES (Payroll_seq.NEXTVAL, 2, 2, 8, 360000, TO_DATE('2025-04-25', 'YYYY-MM-DD')); 
-INSERT INTO Payroll VALUES (Payroll_seq.NEXTVAL, 3, 3, 8, 320000, TO_DATE('2025-04-26', 'YYYY-MM-DD')); 
+INSERT INTO Payroll VALUES (Payroll_seq.NEXTVAL, 1, 1, 8, 400000, TO_DATE('2025-04-25 22:00', 'YYYY-MM-DD HH24:MI')); 
+INSERT INTO Payroll VALUES (Payroll_seq.NEXTVAL, 2, 2, 8, 360000, TO_DATE('2025-04-25 22:00', 'YYYY-MM-DD HH24:MI')); 
+INSERT INTO Payroll VALUES (Payroll_seq.NEXTVAL, 3, 3, 8, 320000, TO_DATE('2025-04-26 22:00', 'YYYY-MM-DD HH24:MI')); 
 -- -------------------------------------- 
 -- III. CREATE TRIGGERS 
 -- -------------------------------------- 

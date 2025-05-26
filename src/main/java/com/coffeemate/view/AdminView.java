@@ -116,7 +116,7 @@ public class AdminView extends javax.swing.JFrame {
         }
 
         EventQueue.invokeLater(() -> {
-            AdminView view = new AdminView();
+            LoginForm view = new LoginForm();
             view.setVisible(true);
         });
     }

@@ -15,6 +15,7 @@ public class Employee {
     private String phone;
     private String email;
     private Date hireDate;
+    private String password;
 
     // Getters and Setters
     public int getEmployeeID() {
@@ -63,5 +64,13 @@ public class Employee {
 
     public void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
+    }
+    
+    public String getPassword() {
+        return this.password;
+    }
+    
+    public void setPassword(String pass) {
+        this.password = pass;
     }
 }

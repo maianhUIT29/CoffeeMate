@@ -8,15 +8,19 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import com.coffeemate.model.MenuItem;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
-public class MenuItemDAO implements DAOInterface<MenuItem>{
+public class MenuItemDAO {
 
     public static MenuItemDAO getInstance() {
         return new MenuItemDAO();
     }
     
-    @Override
+  
     public int insert(MenuItem t) {
         int ketQua = 0;
         try {
@@ -50,7 +54,7 @@ public class MenuItemDAO implements DAOInterface<MenuItem>{
         return ketQua;
     }
 
-    @Override
+   
     public int update(MenuItem t) {
         int ketQua = 0;
         try {
@@ -84,7 +88,7 @@ public class MenuItemDAO implements DAOInterface<MenuItem>{
         return ketQua;
     }
 
-    @Override
+
     public int delete(MenuItem t) {
         int ketQua = 0;
         try {
@@ -114,7 +118,7 @@ public class MenuItemDAO implements DAOInterface<MenuItem>{
         return ketQua;
     }
 
-    @Override
+
     public ArrayList<MenuItem> selectAll() {
         ArrayList<MenuItem> ketQua = new ArrayList<MenuItem>();
         try {
@@ -152,7 +156,7 @@ public class MenuItemDAO implements DAOInterface<MenuItem>{
         return ketQua;
     }
 
-    @Override
+  
     public MenuItem selectById(MenuItem t) {
           MenuItem ketQua = null;
         try {
@@ -192,7 +196,7 @@ public class MenuItemDAO implements DAOInterface<MenuItem>{
         return ketQua;
     }
 
-    @Override
+
     public ArrayList<MenuItem> selectByCondition(String condition) {
          ArrayList<MenuItem> ketQua = new ArrayList<MenuItem>();
         try {
@@ -230,7 +234,7 @@ public class MenuItemDAO implements DAOInterface<MenuItem>{
         return ketQua; 
     }
     
-    @Override
+   
     public boolean checkIfExists(String ItemName) {
         String sql = "SELECT COUNT(*) FROM MenuItem WHERE ItemName = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -246,7 +250,7 @@ public class MenuItemDAO implements DAOInterface<MenuItem>{
         return false; // Không có món trùng tên
     }
     
-    @Override
+ 
     public ArrayList<MenuItem> searchByName(String ItemName){
         ArrayList<MenuItem> menuItems = new ArrayList<>();
         String sql = "SELECT * FROM MenuItem WHERE LOWER(ItemName) LIKE ?";
@@ -273,7 +277,7 @@ public class MenuItemDAO implements DAOInterface<MenuItem>{
         return menuItems;
     }
     
-    @Override
+
     public int deleteByID(int MenuItemID) {
         int result = 0;
         try {
@@ -289,7 +293,7 @@ public class MenuItemDAO implements DAOInterface<MenuItem>{
         return result;
     }
     
-    @Override
+
     public boolean deleteOrDisableMenuItem(int menuItemId) {
         Connection conn = null;
         PreparedStatement pstmtCheck = null;
@@ -352,5 +356,54 @@ public class MenuItemDAO implements DAOInterface<MenuItem>{
             try { if (conn != null) conn.close(); } catch (Exception e) {}
         }
         return false;
+    }
+    
+    public int countMenuItem() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM MenuItem";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+    //lay mon ban chay tu detail
+    public List<Map<String, Object>> getTopSellingMenuItems(int topN) {
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        // Giả sử: 
+        //   - Bảng Detail có cột MenuItemID và Quantity (số lượng món trong từng dòng chi tiết).
+        //   - Bảng MenuItem có cột MenuItemID (PK) và ItemName (tên món).
+        String sql =
+            "SELECT di.MenuItemID, mi.ItemName AS menu_name, SUM(di.Quantity) AS quantity " +
+            "FROM Detail di " +
+            "JOIN MenuItem mi ON di.MenuItemID = mi.MenuItemID " +
+            "GROUP BY di.MenuItemID, mi.ItemName " +
+            "ORDER BY quantity DESC " +
+            "FETCH FIRST ? ROWS ONLY";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, topN);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, Object> row = new HashMap<>();
+                    row.put("menu_item_id", rs.getInt("MenuItemID"));
+                    row.put("menu_name", rs.getString("menu_name"));
+                    row.put("quantity", rs.getInt("quantity"));
+                    result.add(row);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 }

@@ -32,11 +32,13 @@
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.formdev</groupId>
-            <artifactId>flatlaf</artifactId>
-            <version>3.2</version>
-        </dependency>
+
+<dependency>
+  <groupId>org.apache.poi</groupId>
+  <artifactId>poi-ooxml</artifactId>
+  <version>5.2.3</version>
+    <type>jar</type>
+</dependency>
 
          <!-- Flatlat UI -->
         <dependency>
@@ -44,7 +46,18 @@
     <artifactId>flatlaf</artifactId>
     <version>3.2</version>
 </dependency>
-
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.19</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.70</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     
     <build>

@@ -1,4 +1,4 @@
-package com.coffeemate.view;
+package com.coffeemate.component;
 
 import com.coffeemate.model.MenuItem;
 import com.coffeemate.dao.MenuItemDAO;

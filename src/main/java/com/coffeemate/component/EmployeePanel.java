@@ -1,4 +1,4 @@
-package com.coffeemate.view;
+package com.coffeemate.component;
 
 import com.coffeemate.controller.EmployeeController;
 import com.coffeemate.model.Employee;
@@ -96,20 +96,26 @@ public class EmployeePanel extends JPanel {
         return button;
     }
 
-    private void updateEmployeeTable() {
-        List<Employee> list = employeeController.getAllEmployees();
-        String[] cols = {"ID", "Họ tên", "Vai trò", "SDT", "Email", "Ngày tham gia"};
-        DefaultTableModel model = new DefaultTableModel(cols, 0);
-        for (Employee emp : list) {
-            model.addRow(new Object[]{
-                emp.getEmployeeID(),
-                emp.getFullName(),
-                emp.getRole(),
-                emp.getPhone(),
-                emp.getEmail(),
-                emp.getHireDate()
-            });
-        }
-        table.setModel(model);
+   private void updateEmployeeTable() {
+    List<Employee> list = employeeController.getAllEmployees();
+    // Thêm cột "Mật khẩu" vào đây
+    String[] cols = {"ID", "Họ tên", "Vai trò", "SDT", "Email", "Ngày tham gia", "Mật khẩu"};
+    DefaultTableModel model = new DefaultTableModel(cols, 0);
+
+    for (Employee emp : list) {
+        // Lấy thêm mật khẩu từ emp.getPassword()
+        Object[] rowData = new Object[] {
+            emp.getEmployeeID(),
+            emp.getFullName(),
+            emp.getRole(),
+            emp.getPhone(),
+            emp.getEmail(),
+            emp.getHireDate(),
+            emp.getPassword()    // hoặc emp.getPasswordHash() nếu bạn lưu hash
+        };
+        model.addRow(rowData);
     }
+    table.setModel(model);
+}
+
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.coffeemate.utils;
 
 import com.coffeemate.model.Employee;
@@ -9,7 +5,7 @@ import com.coffeemate.model.Employee;
 public class SessionManager {
 
     private static SessionManager instance;  // Biến singleton
-    private Employee loggedInEmployee;  // Lưu trữ thông tin người dùng đã đăng nhập
+    private Employee loggedInEmployee;       // Lưu trữ thông tin người dùng đã đăng nhập
 
     // Constructor riêng tư để tránh khởi tạo từ bên ngoài
     private SessionManager() {
@@ -23,7 +19,12 @@ public class SessionManager {
         return instance;
     }
 
-    // Lấy thông tin người dùng đã đăng nhập
+    // Lấy thông tin người dùng đã đăng nhập (alias cho getLoggedInEmployee)
+    public Employee getLoggedInUser() {
+        return loggedInEmployee;
+    }
+
+    // Lấy thông tin người dùng đã đăng nhập (tên cũ)
     public Employee getLoggedInEmployee() {
         return loggedInEmployee;
     }
@@ -43,5 +44,3 @@ public class SessionManager {
         return loggedInEmployee != null;
     }
 }
-
-

@@ -65,9 +65,8 @@ public void addNotify() {
         btngroupMenu = new javax.swing.ButtonGroup();
         jbtnDashboard = new javax.swing.JToggleButton();
         jbtnEmployee = new javax.swing.JToggleButton();
-        jbtnRevenue = new javax.swing.JToggleButton();
-        jbtnStock = new javax.swing.JToggleButton();
         jbtnMenu = new javax.swing.JToggleButton();
+        jbtnStock1 = new javax.swing.JToggleButton();
 
         btngroupMenu.add(jbtnDashboard);
         jbtnDashboard.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -89,21 +88,6 @@ public void addNotify() {
             }
         });
 
-        btngroupMenu.add(jbtnRevenue);
-        jbtnRevenue.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jbtnRevenue.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/coffeemate/resources/ic_revenue.png"))); // NOI18N
-        jbtnRevenue.setText("Doanh thu");
-
-        btngroupMenu.add(jbtnStock);
-        jbtnStock.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jbtnStock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/coffeemate/resources/ic_product.png"))); // NOI18N
-        jbtnStock.setText("Kho hàng");
-        jbtnStock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnStockActionPerformed(evt);
-            }
-        });
-
         btngroupMenu.add(jbtnMenu);
         jbtnMenu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jbtnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/coffeemate/resources/ic_menu.png"))); // NOI18N
@@ -114,41 +98,43 @@ public void addNotify() {
             }
         });
 
+        btngroupMenu.add(jbtnStock1);
+        jbtnStock1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jbtnStock1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/coffeemate/resources/ic_salary.png"))); // NOI18N
+        jbtnStock1.setText("Hóa đơn");
+        jbtnStock1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnStock1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbtnRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jbtnDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtnEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbtnStock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbtnStock1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnDashboard)
+                    .addComponent(jbtnEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(36, 36, 36)
                 .addComponent(jbtnDashboard)
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
                 .addComponent(jbtnMenu)
-                .addGap(18, 18, 18)
+                .addGap(43, 43, 43)
                 .addComponent(jbtnEmployee)
-                .addGap(18, 18, 18)
-                .addComponent(jbtnStock)
-                .addGap(18, 18, 18)
-                .addComponent(jbtnRevenue)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addComponent(jbtnStock1)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jbtnStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnStockActionPerformed
-        if (menuListener != null) menuListener.onMenuSelected("STOCK");
-    }//GEN-LAST:event_jbtnStockActionPerformed
 
     private void jbtnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnMenuActionPerformed
         if (menuListener != null) menuListener.onMenuSelected("MENU");
@@ -162,6 +148,11 @@ public void addNotify() {
     private void jbtnEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEmployeeActionPerformed
         if (menuListener != null) menuListener.onMenuSelected("EMPLOYEE");
     }//GEN-LAST:event_jbtnEmployeeActionPerformed
+
+    private void jbtnStock1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnStock1ActionPerformed
+               if (menuListener != null) menuListener.onMenuSelected("INVOICE");
+ // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnStock1ActionPerformed
 
        @Override
     public Dimension getPreferredSize() {
@@ -182,7 +173,7 @@ public void addNotify() {
         int buttonHeight = availableHeight / buttonCount;
 
         JToggleButton[] buttons = {
-            jbtnDashboard, jbtnMenu, jbtnEmployee, jbtnStock, jbtnRevenue
+            jbtnDashboard, jbtnMenu, jbtnEmployee, 
         };
 
         for (JToggleButton btn : buttons) {
@@ -199,7 +190,6 @@ public void addNotify() {
     private javax.swing.JToggleButton jbtnDashboard;
     private javax.swing.JToggleButton jbtnEmployee;
     private javax.swing.JToggleButton jbtnMenu;
-    private javax.swing.JToggleButton jbtnRevenue;
-    private javax.swing.JToggleButton jbtnStock;
+    private javax.swing.JToggleButton jbtnStock1;
     // End of variables declaration//GEN-END:variables
 }

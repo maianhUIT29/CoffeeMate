@@ -279,32 +279,32 @@ public class LoginForm extends JFrame {
                         String role = loggedInEmployee.getRole().toLowerCase();
                         System.out.println("Checking role: " + role);
                         
-                        if (role.contains("cashier")) {
-                            System.out.println("Opening CashierView...");
-                            CashierView cashierView = new CashierView();
-                            cashierView.setTitle("CoffeeMate - Staff (" + loggedInEmployee.getFullName() + ")");
-                            cashierView.setLocationRelativeTo(null);
-                            cashierView.setVisible(true);
-                            
-                            // Ensure the UI is correctly sized and displayed
-                            cashierView.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                            cashierView.validate();
-                            cashierView.repaint();
-                            System.out.println("CashierView opened successfully");
-                        } else if (role.contains("manager") || role.contains("admin") || role.contains("store")) {
-                            System.out.println("Opening AdminView...");
-                            AdminView adminView = new AdminView();
-                            adminView.setTitle("CoffeeMate - Manager (" + loggedInEmployee.getFullName() + ")");
-                            adminView.setLocationRelativeTo(null);
-                            adminView.setVisible(true);
-                            adminView.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                            System.out.println("AdminView opened successfully");
-                        } else {
-                            // For any other role, show an error message
-                            System.out.println("Unknown role: " + role);
-                            showToast("Vai trò không được hỗ trợ: " + loggedInEmployee.getRole());
-                            new LoginForm(); // Reopen login form
-                        }
+                       if (role.contains("cashier") || role.contains("bartender")) {
+    // Mở CashierView cho cả cashier lẫn bartender
+    System.out.println("Opening CashierView...");
+    CashierView cashierView = new CashierView();
+    cashierView.setTitle("CoffeeMate - Staff (" + loggedInEmployee.getFullName() + ")");
+    cashierView.setLocationRelativeTo(null);
+    cashierView.setVisible(true);
+    cashierView.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    cashierView.validate();
+    cashierView.repaint();
+} else if (role.contains("manager") || role.contains("admin") || role.contains("store")) {
+    // Mở AdminView như cũ
+    System.out.println("Opening AdminView...");
+    AdminView adminView = new AdminView();
+    adminView.setTitle("CoffeeMate - Manager (" + loggedInEmployee.getFullName() + ")");
+    adminView.setLocationRelativeTo(null);
+    adminView.setVisible(true);
+    adminView.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    System.out.println("AdminView opened successfully");
+} else {
+    // Vai trò khác không được hỗ trợ
+    System.out.println("Unknown role: " + role);
+    showToast("Vai trò không được hỗ trợ: " + loggedInEmployee.getRole());
+    new LoginForm(); // Quay lại form đăng nhập
+}
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         System.err.println("Error opening view: " + e.getMessage());

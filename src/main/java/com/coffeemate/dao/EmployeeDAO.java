@@ -29,6 +29,7 @@ public class EmployeeDAO {
                 e.setEmail(rs.getString("Email"));
                 e.setHireDate(rs.getDate("HireDate"));
                 e.setPassword(rs.getString("Password"));
+                e.setStatus(rs.getString("Status"));
                 employees.add(e);
             }
         } catch (SQLException ex) {
@@ -127,18 +128,30 @@ public class EmployeeDAO {
     }
 
     // 6. Xóa nhân viên
-    public boolean deleteEmployee(int employeeId) {
-        String query = "DELETE FROM Employee WHERE EmployeeID = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+   // 6. Xóa nhân viên (thực hiện thay đổi trạng thái)
+public boolean deleteEmployee(int employeeId) {
+    String sql = "UPDATE Employee SET status = 'inactive' WHERE EmployeeID = ? AND status = 'active'";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        ps.setInt(1, employeeId);  // employeeId là ID của nhân viên bạn muốn thay đổi trạng thái
+        int rowsUpdated = ps.executeUpdate();
 
-            stmt.setInt(1, employeeId);
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        if (rowsUpdated > 0) {
+            System.out.println("Trạng thái của nhân viên đã được thay đổi thành 'inactive'.");
+            return true;  // Trả về true nếu trạng thái đã được thay đổi thành công
+        } else {
+            System.out.println("Không có nhân viên nào có trạng thái 'active' với ID này.");
+            return false;  // Trả về false nếu không tìm thấy nhân viên có trạng thái 'active'
         }
-        return false;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        System.err.println("Lỗi khi cập nhật trạng thái nhân viên: " + e.getMessage());
+        return false;  // Trả về false nếu có lỗi xảy ra trong quá trình cập nhật
     }
+}
+
+    
 
     // 7. Đăng nhập: trả về Employee nếu đúng, ngược lại trả về null
     public Employee login(String email, String password) {

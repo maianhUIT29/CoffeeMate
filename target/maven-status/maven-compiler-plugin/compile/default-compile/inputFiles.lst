@@ -17,7 +17,6 @@ D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\controller\EmployeeController.j
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\component\InvoicePanel.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\dao\MenuItemDAO.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\model\Employee.java
-D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\component\CheckoutPanel.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\component\AdDashBoard.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\controller\DetailController.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\model\Invoice.java
@@ -26,7 +25,6 @@ D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\component\EmployeeDialog.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\model\MenuItem.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\component\Sidebar.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\controller\InvoiceController.java
-D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\component\InventoryPanel.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\model\Detail.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\utils\UIHelper.java
 D:\GitHUB\CoffeMate\src\main\java\com\coffeemate\model\ChartDataModel.java

@@ -16,7 +16,7 @@ public class Employee {
     private String email;
     private Date hireDate;
     private String password;
-
+private String status;
     // Getters and Setters
     public int getEmployeeID() {
         return employeeID;
@@ -72,5 +72,14 @@ public class Employee {
     
     public void setPassword(String pass) {
         this.password = pass;
+    }
+    
+    
+     public String getStatus() {
+        return this.status;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

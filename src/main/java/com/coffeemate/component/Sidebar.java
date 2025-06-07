@@ -4,6 +4,8 @@
  */
 package com.coffeemate.component;
 
+import com.coffeemate.utils.SessionManager;
+import com.coffeemate.view.LoginForm;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeListener;
@@ -130,9 +132,9 @@ public void addNotify() {
                 .addComponent(jbtnMenu)
                 .addGap(43, 43, 43)
                 .addComponent(jbtnEmployee)
-                .addGap(44, 44, 44)
+                .addGap(32, 32, 32)
                 .addComponent(jbtnStock1)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

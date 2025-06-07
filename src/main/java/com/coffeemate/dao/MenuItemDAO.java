@@ -1,6 +1,5 @@
 package com.coffeemate.dao;
 
-
 import java.sql.Connection;
 import com.coffeemate.configs.DBConnection;
 import java.sql.Statement;
@@ -19,8 +18,7 @@ public class MenuItemDAO {
     public static MenuItemDAO getInstance() {
         return new MenuItemDAO();
     }
-    
-  
+
     public int insert(MenuItem t) {
         int ketQua = 0;
         try {
@@ -54,7 +52,6 @@ public class MenuItemDAO {
         return ketQua;
     }
 
-   
     public int update(MenuItem t) {
         int ketQua = 0;
         try {
@@ -88,7 +85,6 @@ public class MenuItemDAO {
         return ketQua;
     }
 
-
     public int delete(MenuItem t) {
         int ketQua = 0;
         try {
@@ -117,7 +113,6 @@ public class MenuItemDAO {
 
         return ketQua;
     }
-
 
     public ArrayList<MenuItem> selectAll() {
         ArrayList<MenuItem> ketQua = new ArrayList<MenuItem>();
@@ -156,9 +151,8 @@ public class MenuItemDAO {
         return ketQua;
     }
 
-  
     public MenuItem selectById(MenuItem t) {
-          MenuItem ketQua = null;
+        MenuItem ketQua = null;
         try {
             // B1: Tạo kết nối đến CSDL
             Connection con = DBConnection.getConnection();
@@ -196,9 +190,8 @@ public class MenuItemDAO {
         return ketQua;
     }
 
-
     public ArrayList<MenuItem> selectByCondition(String condition) {
-         ArrayList<MenuItem> ketQua = new ArrayList<MenuItem>();
+        ArrayList<MenuItem> ketQua = new ArrayList<MenuItem>();
         try {
             // B1: Tạo kết nối đến CSDL
             Connection con = DBConnection.getConnection();
@@ -233,8 +226,7 @@ public class MenuItemDAO {
 
         return ketQua; 
     }
-    
-   
+
     public boolean checkIfExists(String ItemName) {
         String sql = "SELECT COUNT(*) FROM MenuItem WHERE ItemName = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -249,8 +241,7 @@ public class MenuItemDAO {
         }
         return false; // Không có món trùng tên
     }
-    
- 
+
     public ArrayList<MenuItem> searchByName(String ItemName){
         ArrayList<MenuItem> menuItems = new ArrayList<>();
         String sql = "SELECT * FROM MenuItem WHERE LOWER(ItemName) LIKE ?";
@@ -276,7 +267,6 @@ public class MenuItemDAO {
 
         return menuItems;
     }
-    
 
     public int deleteByID(int MenuItemID) {
         int result = 0;
@@ -292,7 +282,6 @@ public class MenuItemDAO {
         }
         return result;
     }
-    
 
     public boolean deleteOrDisableMenuItem(int menuItemId) {
         Connection conn = null;
@@ -305,7 +294,7 @@ public class MenuItemDAO {
             conn = DBConnection.getConnection(); // Kết nối database
 
             // Kiểm tra món có đang được bán không
-            String sqlCheck = "SELECT COUNT(*) FROM OrderDetail WHERE MenuItemID = ?";
+            String sqlCheck = "SELECT COUNT(*) FROM Detail WHERE MenuItemID = ?";
             pstmtCheck = conn.prepareStatement(sqlCheck);
             pstmtCheck.setInt(1, menuItemId);
             rs = pstmtCheck.executeQuery();
@@ -357,7 +346,7 @@ public class MenuItemDAO {
         }
         return false;
     }
-    
+
     public int countMenuItem() {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM MenuItem";
@@ -372,6 +361,7 @@ public class MenuItemDAO {
         }
         return count;
     }
+
     //lay mon ban chay tu detail
     public List<Map<String, Object>> getTopSellingMenuItems(int topN) {
         List<Map<String, Object>> result = new ArrayList<>();

@@ -3,6 +3,7 @@ com\coffeemate\component\AdDashBoard$5.class
 com\coffeemate\component\Sidebar$MenuSelectionListener.class
 com\coffeemate\component\InvoicePanel$1.class
 com\coffeemate\dao\DetailDAO.class
+com\coffeemate\component\CashierHeader$1.class
 com\coffeemate\controller\DetailController.class
 com\coffeemate\component\Sidebar$2.class
 com\coffeemate\view\LoginForm$GradientPanel.class
@@ -15,7 +16,6 @@ com\coffeemate\view\CashierView$HeaderRenderer.class
 com\coffeemate\component\CashierHeader.class
 com\coffeemate\dao\MenuItemDAO.class
 com\coffeemate\component\InvoicePanel$5.class
-com\coffeemate\component\CheckoutPanel$2.class
 com\coffeemate\view\ForgotPasswordForm$3.class
 com\coffeemate\view\LoginForm$2.class
 com\coffeemate\component\InvoicePanel$DeleteButtonEditor$1.class
@@ -23,7 +23,6 @@ com\coffeemate\model\ChartDataModel.class
 com\coffeemate\component\AdDashBoard$1.class
 com\coffeemate\component\InvoicePanel$2.class
 com\coffeemate\component\InvoicePanel$4.class
-com\coffeemate\component\CheckoutPanel$1.class
 com\coffeemate\view\CashierView$MenuItemCard$1.class
 com\coffeemate\component\AdDashBoard$8.class
 com\coffeemate\view\LoginForm$3.class
@@ -45,7 +44,6 @@ com\coffeemate\component\InvoicePanel$DeleteButtonEditor.class
 com\coffeemate\controller\InvoiceController.class
 com\coffeemate\view\ForgotPasswordForm.class
 com\coffeemate\component\InvoicePanel$DeleteButtonRenderer.class
-com\coffeemate\component\CheckoutPanel.class
 com\coffeemate\component\EmployeePanel.class
 com\coffeemate\model\MenuItem.class
 com\coffeemate\view\AdminView.class
@@ -62,11 +60,9 @@ com\coffeemate\model\Detail.class
 com\coffeemate\view\GradientPanel.class
 com\coffeemate\view\CashierView$MenuItemCard.class
 com\coffeemate\component\AdDashBoard$4.class
-com\coffeemate\component\CheckoutPanel$CheckoutItem.class
 com\coffeemate\view\CashierView$InvoiceLine.class
 com\coffeemate\controller\EmployeeController.class
 com\coffeemate\view\ForgotPasswordForm$2.class
-com\coffeemate\component\InventoryPanel.class
 com\coffeemate\utils\SessionManager.class
 com\coffeemate\component\InvoicePanel$9.class
 com\coffeemate\component\Sidebar$3.class

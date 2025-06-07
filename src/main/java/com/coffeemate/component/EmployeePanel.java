@@ -99,7 +99,7 @@ public class EmployeePanel extends JPanel {
    private void updateEmployeeTable() {
     List<Employee> list = employeeController.getAllEmployees();
     // Thêm cột "Mật khẩu" vào đây
-    String[] cols = {"ID", "Họ tên", "Vai trò", "SDT", "Email", "Ngày tham gia", "Mật khẩu"};
+    String[] cols = {"ID", "Họ tên", "Vai trò", "SDT", "Email", "Ngày tham gia", "Mật khẩu", "Trạng thái"};
     DefaultTableModel model = new DefaultTableModel(cols, 0);
 
     for (Employee emp : list) {
@@ -111,7 +111,8 @@ public class EmployeePanel extends JPanel {
             emp.getPhone(),
             emp.getEmail(),
             emp.getHireDate(),
-            emp.getPassword()    // hoặc emp.getPasswordHash() nếu bạn lưu hash
+            emp.getPassword(), 
+            emp.getStatus()  
         };
         model.addRow(rowData);
     }

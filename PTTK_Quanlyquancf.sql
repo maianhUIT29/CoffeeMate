@@ -18,18 +18,19 @@ ALTER TABLE MenuItem ADD CONSTRAINT menuitem_price_check CHECK (Price >= 0);
 -- 2. BẢNG NHÂN VIÊN (Employee)
 -- Mô tả: Lưu trữ thông tin cá nhân và công việc của nhân viên trong hệ thống.
 -- ====================================
-CREATE TABLE Employee ( 
-    EmployeeID NUMBER PRIMARY KEY,             -- Khóa chính, định danh duy nhất cho mỗi nhân viên
-    FullName VARCHAR2(100) NOT NULL,            -- Tên đầy đủ của nhân viên
-    Role VARCHAR2(50) NOT NULL CHECK (Role IN ('Manager', 'Bartender', 'Cashier')),  -- Vai trò của nhân viên (Manager, Bartender, Cashier)
-    Phone VARCHAR2(20),                         -- Số điện thoại của nhân viên
-    Email VARCHAR2(100),                        -- Địa chỉ email của nhân viên
-    HireDate DATE NOT NULL,                     -- Ngày tuyển dụng của nhân viên
-    Password VARCHAR(50) DEFAULT '123456789' NOT NULL -- Mật khẩu đăng nhập (mặc định là "123456789")
+CREATE TABLE Employee (
+    EmployeeID NUMBER PRIMARY KEY,
+    FullName   VARCHAR2(100) NOT NULL,
+    Role       VARCHAR2(50)  NOT NULL
+               CONSTRAINT employee_role_check CHECK (Role IN ('Manager','Bartender','Cashier')),
+    Phone      VARCHAR2(20),
+    Email      VARCHAR2(100),
+    HireDate   DATE          NOT NULL,
+    Password   VARCHAR2(50)  DEFAULT '123456789' NOT NULL,
+    Status     VARCHAR2(20)  DEFAULT 'active'
+               CONSTRAINT employee_status_check CHECK (Status IN ('active','inactive'))
 );
 
--- Ràng buộc: Đảm bảo vai trò của nhân viên hợp lệ (Manager, Bartender, Cashier)
-ALTER TABLE Employee ADD CONSTRAINT employee_role_check CHECK (Role IN ('Manager', 'Bartender', 'Cashier'));
 
 -- ====================================
 -- 3. BẢNG HÓA ĐƠN (Invoice)
@@ -110,7 +111,6 @@ BEGIN
     :NEW.OrderDetailID := detail_seq.NEXTVAL;
 END;
 /
-
 
 -- Thêm 20 món nước vào bảng MenuItem
 INSERT INTO MenuItem (ItemName, Price, Description, Status) VALUES ('Cà Phê Sữa Đá', 20000, 'Cà phê đen pha với sữa đặc, đá viên.', 'Available');
@@ -360,6 +360,7 @@ EXCEPTION
     DBMS_OUTPUT.PUT_LINE('Lỗi xảy ra: ' || SQLERRM);
 END;
 /
+
 
 
 
